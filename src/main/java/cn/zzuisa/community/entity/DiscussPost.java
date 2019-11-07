@@ -16,6 +16,8 @@ public class DiscussPost {
     private int status;
     private Date createTime;
     private int comment;
+    private int commentCount;
+    private int score;
 
     public int getId() {
         return id;
@@ -81,6 +83,22 @@ public class DiscussPost {
         this.comment = comment;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "DiscussPost{" +
@@ -92,6 +110,8 @@ public class DiscussPost {
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", comment=" + comment +
+                ", commentCount=" + commentCount +
+                ", score=" + score +
                 '}';
     }
 }

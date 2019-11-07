@@ -1,0 +1,11 @@
+2019-10-25 00:15:07.957  INFO 1812 --- [main] cn.zzuisa.community.LoggerTest           : Starting LoggerTest on FrankdeMacBook-Pro.local with PID 1812 (started by frank in /Users/frank/Desktop/A_Workspace/ideaProgram/community)
+2019-10-25 00:15:07.958 DEBUG 1812 --- [main] cn.zzuisa.community.LoggerTest           : Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-10-25 00:15:07.959  INFO 1812 --- [main] cn.zzuisa.community.LoggerTest           : No active profile set, falling back to default profiles: default
+2019-10-25 00:15:10.034  INFO 1812 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-25 00:15:10.277  INFO 1812 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-10-25 00:15:10.509  INFO 1812 --- [main] cn.zzuisa.community.LoggerTest           : Started LoggerTest in 2.975 seconds (JVM running for 3.672)
+2019-10-25 00:15:10.660 DEBUG 1812 --- [main] cn.zzuisa.community.LoggerTest           : debug log
+2019-10-25 00:15:10.660  INFO 1812 --- [main] cn.zzuisa.community.LoggerTest           : info log
+2019-10-25 00:15:10.660  WARN 1812 --- [main] cn.zzuisa.community.LoggerTest           : warn log
+2019-10-25 00:15:10.660 ERROR 1812 --- [main] cn.zzuisa.community.LoggerTest           : error log
+2019-10-25 00:15:10.668  INFO 1812 --- [Thread-3] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

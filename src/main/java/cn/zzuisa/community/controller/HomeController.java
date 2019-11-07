@@ -33,7 +33,7 @@ public class HomeController {
         // before the function is called, SpringMVC is going to automatically initialize Model and Page, and autowires the Page into Model
         // so, we can directly access the data in Objective Page in thymeleaf
         page.setRows(discussPostService.findDiscussPostRows(0));
-        page.setPath("/index");
+         page.setPath("/index");
 
         List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(), page.getLimit());
         List<Map<String, Object>> discussPosts = new ArrayList<>();

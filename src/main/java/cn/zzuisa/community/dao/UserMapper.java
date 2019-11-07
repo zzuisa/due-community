@@ -2,12 +2,15 @@ package cn.zzuisa.community.dao;
 
 import cn.zzuisa.community.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 /**
  * @Author: Ao
  * @date: 2019-10-23 23:47
  * @Description:
  */
 @Mapper
+@Repository
 public interface UserMapper {
     User selectById(int id);
 
