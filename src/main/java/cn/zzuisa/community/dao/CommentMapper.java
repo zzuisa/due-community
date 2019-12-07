@@ -1,6 +1,7 @@
 package cn.zzuisa.community.dao;
 
 import cn.zzuisa.community.entity.Comment;
+import cn.zzuisa.community.entity.DiscussPost;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,7 @@ public interface CommentMapper {
 
     int selectCountByEntity(int entityType, int entityId);
 
+    int insertComment(Comment comment);
 
 
 }

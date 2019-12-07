@@ -21,11 +21,16 @@ body {
 }
 
 header .navbar-brand {
-	background: url('http://static.nowcoder.com/images/res/logo/logo-v3.png') no-repeat;
+	background: url('https://www-stud.uni-due.de/~soaosunn/images/UDE-logo.png') no-repeat;
 	background-size: 147px 42px;
+	background-color: #ffffff;
 	width: 147px;
 	height: 42px;
+	padding: 10px;
 	margin: 5px 15px 5px 0;
+	-webkit-border-radius: 3.1px;
+	-moz-border-radius: 5.1px;
+	border-radius: 4.1px;
 }
 
 header .navbar {
