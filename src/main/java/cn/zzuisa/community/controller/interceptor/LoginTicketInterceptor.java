@@ -1,4 +1,4 @@
-package cn.zzuisa.community.controller.intercepter;
+package cn.zzuisa.community.controller.interceptor;
 
 import cn.zzuisa.community.entity.LoginTicket;
 import cn.zzuisa.community.entity.User;

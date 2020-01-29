@@ -44,10 +44,14 @@ public class CommentService implements CommunityConstant {
         comment.setContent(HtmlUtils.htmlEscape(comment.getContent()));
         comment.setContent(sensitiveFilter.filter(comment.getContent()));
         int rows = commentMapper.insertComment(comment);
-        if (comment.getEntityType() == ENTITY_TEXT_POST) {
-            int count = commentMapper.selectCountByEntity(ENTITY_TEXT_POST, comment.getEntityId());
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            int count = commentMapper.selectCountByEntity(ENTITY_TYPE_POST, comment.getEntityId());
             discussPostService.updateCommentCount(comment.getEntityId(), count);
         }
         return rows;
+    }
+
+    public Comment findCommentById(int id) {
+        return commentMapper.selectCommentById(id);
     }
 }

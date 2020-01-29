@@ -1,8 +1,7 @@
-package cn.zzuisa.community.controller.intercepter;
+package cn.zzuisa.community.controller.interceptor;
 
 import cn.zzuisa.community.annotation.LoginRequired;
 import cn.zzuisa.community.util.HostHolder;
-import org.springframework.beans.MethodInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

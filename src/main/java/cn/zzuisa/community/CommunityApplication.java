@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @SpringBootApplication
+@SuppressWarnings("all")
 public class CommunityApplication {
 
 	public static void main(String[] args) {
