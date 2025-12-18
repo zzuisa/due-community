@@ -18,7 +18,7 @@ public class LikeService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    // 点赞
+    // Like/unlike
     public void like(int userId, int entityType, int entityId, int entityUserId) {
         redisTemplate.execute(new SessionCallback() {
             @Override
@@ -43,19 +43,19 @@ public class LikeService {
         });
     }
 
-    // 查询某实体点赞的数量
+    // Query like count of an entity
     public long findEntityLikeCount(int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
         return redisTemplate.opsForSet().size(entityLikeKey);
     }
 
-    // 查询某人对某实体的点赞状态
+    // Query whether a user liked an entity
     public int findEntityLikeStatus(int userId, int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
         return redisTemplate.opsForSet().isMember(entityLikeKey, userId) ? 1 : 0;
     }
 
-    // 查询某个用户获得的赞
+    // Query total likes received by a user
     public int findUserLikeCount(int userId) {
         String userLikeKey = RedisKeyUtil.getUserLikeKey(userId);
         Integer count = (Integer) redisTemplate.opsForValue().get(userLikeKey);

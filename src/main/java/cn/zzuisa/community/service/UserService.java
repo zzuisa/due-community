@@ -64,38 +64,38 @@ public class UserService implements CommunityConstant {
     public Map<String, Object> register(User user) {
         Map<String, Object> map = new HashMap<>();
 
-        // 空值处理
+        // Null checks
         if (user == null) {
-            throw new IllegalArgumentException("参数不能为空!");
+            throw new IllegalArgumentException("Parameter must not be null!");
         }
         if (StringUtils.isBlank(user.getUsername())) {
-            map.put("usernameMsg", "账号不能为空!");
+            map.put("usernameMsg", "Username cannot be empty!");
             return map;
         }
         if (StringUtils.isBlank(user.getPassword())) {
-            map.put("passwordMsg", "密码不能为空!");
+            map.put("passwordMsg", "Password cannot be empty!");
             return map;
         }
         if (StringUtils.isBlank(user.getEmail())) {
-            map.put("emailMsg", "邮箱不能为空!");
+            map.put("emailMsg", "Email cannot be empty!");
             return map;
         }
 
-        // 验证账号
+        // Validate username
         User u = userMapper.selectByName(user.getUsername());
         if (u != null) {
-            map.put("usernameMsg", "该账号已存在!");
+            map.put("usernameMsg", "This username is already taken!");
             return map;
         }
 
-        // 验证邮箱
+        // Validate email
         u = userMapper.selectByEmail(user.getEmail());
         if (u != null) {
-            map.put("emailMsg", "该邮箱已被注册!");
+            map.put("emailMsg", "This email has already been registered!");
             return map;
         }
 
-        // 注册用户
+        // Register user
         user.setSalt(CommunityUtil.generateUUID().substring(0, 5));
         user.setPassword(CommunityUtil.md5(user.getPassword() + user.getSalt()));
         user.setType(0);
@@ -105,14 +105,14 @@ public class UserService implements CommunityConstant {
         user.setCreateTime(new Date());
         userMapper.insertUser(user);
 
-        // 激活邮件
+        // Activation email
         Context context = new Context();
         context.setVariable("email", user.getEmail());
         // http://localhost:8080/community/activation/101/code
         String url = domain + contextPath + "/activation/" + user.getId() + "/" + user.getActivationCode();
         context.setVariable("url", url);
         String content = templateEngine.process("/mail/activation", context);
-        mailClient.sendMail(user.getEmail(), "激活账号", content);
+        mailClient.sendMail(user.getEmail(), "Activate your account", content);
 
         return map;
 
@@ -133,36 +133,36 @@ public class UserService implements CommunityConstant {
 
     public Map<String, Object> login(String username, String password, long expiredSeconds) {
         Map<String, Object> map = new HashMap<>();
-        // 控制处理
+        // Validation
         if (StringUtils.isBlank(username)) {
-            map.put("usernameMsg", "用户名不能为空！");
+            map.put("usernameMsg", "Username cannot be empty!");
             return map;
         }
         if (StringUtils.isBlank(password)) {
-            map.put("passwordMsg", "密码不能为空！");
+            map.put("passwordMsg", "Password cannot be empty!");
             return map;
         }
-        // 验证账号
+        // Validate username
         User user = userMapper.selectByName(username);
         if (user == null) {
-            map.put("usernameMsg", "该账号不存在！");
+            map.put("usernameMsg", "Account does not exist!");
             return map;
 
         }
-        // 验证状态
+        // Validate activation status
         if (user.getStatus() == 0) {
-            map.put("usernameMsg", "该账号未激活！");
+            map.put("usernameMsg", "Account is not activated!");
             return map;
 
         }
-        // 验证密码
+        // Validate password
         password = CommunityUtil.md5(password + user.getSalt());
         if (!user.getPassword().equals(password)) {
-            map.put("passwordMsg", "密码不正确！");
+            map.put("passwordMsg", "Incorrect password!");
             return map;
 
         }
-        // 生成登录凭证
+        // Generate login ticket
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(user.getId());
         loginTicket.setTicket(CommunityUtil.generateUUID());
@@ -176,7 +176,7 @@ public class UserService implements CommunityConstant {
     }
 
     public void logout(String ticket) {
-        // status:1 表示无效
+        // status: 1 means invalid
 //        loginTicketMapper.updateStatus(ticket, 1);
         String redisKey = RedisKeyUtil.getTicketKey(ticket);
         LoginTicket loginTicket = (LoginTicket) redisTemplate.opsForValue().get(redisKey);
@@ -200,13 +200,13 @@ public class UserService implements CommunityConstant {
         return userMapper.selectByName(username);
     }
 
-    // 1. 优先从缓存中取值
+    // 1) Prefer reading from cache
     private User getCache(int userId) {
         String redisKey = RedisKeyUtil.getUserKey(userId);
         return (User) redisTemplate.opsForValue().get(redisKey);
     }
 
-    // 2. 取不到时初始化缓存数据
+    // 2) Initialize cache on cache miss
     private User initCache(int userId) {
         User user = userMapper.selectById(userId);
         String redisKey = RedisKeyUtil.getUserKey(userId);
@@ -214,7 +214,7 @@ public class UserService implements CommunityConstant {
         return user;
     }
 
-    // 3. 数据变更时清除缓存数据
+    // 3) Clear cache on data change
     private void clearCache(int userId) {
         String redisKey = RedisKeyUtil.getUserKey(userId);
         redisTemplate.delete(redisKey);

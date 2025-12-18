@@ -36,18 +36,18 @@ public class LikeController implements CommunityConstant {
     public String like(int entityType, int entityId, int entityUserId,int postId) {
         User user = hostHolder.getUser();
 
-        // 点赞
+        // Like
         likeService.like(user.getId(), entityType, entityId, entityUserId);
 
-        // 数量
+        // Count
         long likeCount = likeService.findEntityLikeCount(entityType, entityId);
-        // 状态
+        // Status
         int likeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
-        // 返回的结果
+        // Response payload
         Map<String, Object> map = new HashMap<>();
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);
-        // 触发点赞
+        // Trigger like event
         if (likeStatus == 1) {
             Event event = new Event();
             event.setEntityUserId(entityUserId)

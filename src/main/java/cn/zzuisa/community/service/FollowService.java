@@ -51,27 +51,27 @@ public class FollowService implements CommunityConstant {
         });
     }
 
-    // 查询关注实体的数量
+    // Query the number of entities followed by a user
     public long findFolloweeCount(int userId, int entityType) {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
         return redisTemplate.opsForZSet().zCard(followeeKey);
     }
 
-    // 查询实体粉丝的数量
+    // Query the number of followers of an entity
     public long findFollowerCount(int entityType, int entityId) {
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
         System.err.println("---:"+redisTemplate.opsForZSet().zCard("follower:3:149"));
         return redisTemplate.opsForZSet().zCard(followerKey);
     }
 
-    // 查询当前用户是否已关注该实体
+    // Query whether the user has followed the entity
     public boolean hasFollowed(int userId, int entityType, int entityId) {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
 
         return redisTemplate.opsForZSet().score(followeeKey, entityId) != null;
     }
 
-    // 查询某用户关注的人
+    // Query users followed by the given user
     public List<Map<String, Object>> findFollowees(int userId, int offset, int limit) {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, ENTITY_TYPE_USER);
         Set<Integer> targetIds = redisTemplate.opsForZSet().reverseRange(followeeKey, offset, offset + limit - 1);
@@ -92,7 +92,7 @@ public class FollowService implements CommunityConstant {
 
     }
 
-    // 查询某用户的粉丝
+    // Query followers of the given user
     public List<Map<String, Object>> findFollowers(int userId, int offset, int limit) {
         String followerKey = RedisKeyUtil.getFollowerKey(ENTITY_TYPE_USER, userId);
         Set<Integer> targetIds = redisTemplate.opsForZSet().reverseRange(followerKey, offset, offset + limit - 1);
