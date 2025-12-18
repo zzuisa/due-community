@@ -33,15 +33,15 @@ public class EventConsumer implements CommunityConstant {
     @KafkaListener(topics = {TOPIC_COMMENT, TOPIC_FOLLOW, TOPIC_LIKE})
     public void handleCommentMessage(ConsumerRecord record) {
         if (record == null && record.value() == null) {
-            logger.error("消息的内容为空");
+            logger.error("Message content is empty.");
             return;
         }
         Event event = JSONObject.parseObject(record.value().toString(), Event.class);
         if (event == null) {
-            logger.error("消息格式错误");
+            logger.error("Invalid message format.");
             return;
         }
-        // 发送站内通知
+        // Send in-site notification
         Message message = new Message();
         message.setFromId(SYSTEM_USER_ID);
         message.setToId(event.getEntityUserId());

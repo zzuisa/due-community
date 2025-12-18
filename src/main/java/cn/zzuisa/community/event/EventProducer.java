@@ -15,9 +15,9 @@ public class EventProducer {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    // 处理事件
+    // Publish event
     public void fireEvent(Event event) {
-        // 将事件发布到指定的主题
+        // Publish the event to the specified topic
         kafkaTemplate.send(event.getTopic(), JSONObject.toJSONString(event));
     }
 }

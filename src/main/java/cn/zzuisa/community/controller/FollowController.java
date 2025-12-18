@@ -51,7 +51,7 @@ public class FollowController implements CommunityConstant {
                 .setEntityId(entityId)
                 .setUserId(user.getId());
         eventProducer.fireEvent(event);
-        return CommunityUtil.getJSONString(0, "已关注！");
+        return CommunityUtil.getJSONString(0, "Followed!");
     }
 
     @RequestMapping(path = "/unfollow", method = RequestMethod.POST)
@@ -59,14 +59,14 @@ public class FollowController implements CommunityConstant {
     public String unfollow(int entityType, int entityId) {
         User user = hostHolder.getUser();
         followService.unfollow(user.getId(), entityType, entityId);
-        return CommunityUtil.getJSONString(0, "已取消关注！");
+        return CommunityUtil.getJSONString(0, "Unfollowed!");
     }
 
     @RequestMapping(path = "/followees/{userId}", method = RequestMethod.GET)
     public String getFollowees(@PathVariable("userId") int userId, Page page, Model model) {
         User user = userService.findUserById(userId);
         if (user == null) {
-            throw new RuntimeException("该用户不存在");
+            throw new RuntimeException("User does not exist.");
         }
         model.addAttribute("user", user);
         page.setLimit(5);
@@ -87,7 +87,7 @@ public class FollowController implements CommunityConstant {
     public String getFollowers(@PathVariable("userId") int userId, Page page, Model model) {
         User user = userService.findUserById(userId);
         if (user == null) {
-            throw new RuntimeException("该用户不存在");
+            throw new RuntimeException("User does not exist.");
         }
         model.addAttribute("user", user);
         page.setLimit(5);

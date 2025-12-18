@@ -6,62 +6,62 @@ package cn.zzuisa.community.util;
  */
 public interface CommunityConstant {
     /**
-     * 激活成功
+     * Activation succeeded.
      */
     int ACTIVATION_SUCCESS = 0;
 
     /**
-     * 重复激活
+     * Activation repeated (already activated).
      */
     int ACTIVATION_REPEAT = 1;
 
     /**
-     * 激活失败
+     * Activation failed.
      */
     int ACTIVATION_FAILURE = 2;
 
     /**
-     * 默认状态的登录凭证的超时时间
+     * Login ticket expiration time for the default (non-remember-me) mode.
      */
     int DEFAULT_EXPIRED_SECONDS = 3600 * 12;
 
     /**
-     * 记住状态的登录凭证超时时间
+     * Login ticket expiration time for remember-me mode.
      */
     int REMEMBER_EXPIRED_SECONDS = 3600 * 24 * 100;
 
     /**
-     * 实体类型: 帖子
+     * Entity type: post.
      */
     int ENTITY_TYPE_POST = 1;
 
     /**
-     * 实体类型: 评论
+     * Entity type: comment.
      */
     int ENTITY_TYPE_COMMENT = 2;
 
     /**
-     * 实体类型: 用户
+     * Entity type: user.
      */
     int ENTITY_TYPE_USER = 3;
 
     /**
-     * 主题: 评论
+     * Topic: comment.
      */
     String TOPIC_COMMENT = "comment";
 
     /**
-     * 主题: 点赞
+     * Topic: like.
      */
     String TOPIC_LIKE = "like";
 
     /**
-     * 主题: 关注
+     * Topic: follow.
      */
     String TOPIC_FOLLOW = "follow";
 
     /**
-     * 系统用户ID
+     * System user ID.
      */
     int SYSTEM_USER_ID = 1;
 }

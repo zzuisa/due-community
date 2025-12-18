@@ -31,7 +31,7 @@ public class DiscussPostService {
 
     public int addDiscussPost(DiscussPost discussPost) {
         if (discussPost == null) {
-            throw new IllegalArgumentException("参数不能为空");
+            throw new IllegalArgumentException("Parameter must not be null.");
         }
         discussPost.setTitle(HtmlUtils.htmlEscape(discussPost.getTitle()));
         discussPost.setContent(HtmlUtils.htmlEscape(discussPost.getContent()));

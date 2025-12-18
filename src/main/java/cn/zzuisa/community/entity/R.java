@@ -1,7 +1,7 @@
 package cn.zzuisa.community.entity;
 
 /**
- * 返回值
+ * Generic response wrapper.
  * @author Ao
  *
  * @param <T>
@@ -19,7 +19,7 @@ public class R<T> {
     private T content;
 
     /**
-     * 通用错误code时调用
+     * Create an error response using the generic ERROR code.
      * @param content
      * @return
      */
@@ -34,7 +34,7 @@ public class R<T> {
         return r;
     }
     /**
-     * 未登录
+     * Not logged in.
      * @param content
      * @return
      */
@@ -44,7 +44,7 @@ public class R<T> {
         return r;
     }
     /**
-     * 未绑定
+     * Not bound.
      * @param content
      * @return
      */
@@ -54,7 +54,7 @@ public class R<T> {
         return r;
     }
     /**
-     * 无权限
+     * Unauthorized.
      */
     public static <Y> R<Y> unAuthorized(Y content) {
         R<Y> r = new R<Y>(UNAUTHORIZED);
@@ -62,7 +62,7 @@ public class R<T> {
         return r;
     }
     /**
-     * 成功时调用
+     * Success response.
      * @param content
      * @return
      */
@@ -72,7 +72,7 @@ public class R<T> {
         return r;
     }
 
-    /*分界线：以下为构造函数和getter、setter*/
+    /* Separator: constructors and getters/setters below */
 
     public R(Integer code, T content) {
         this.code = code;

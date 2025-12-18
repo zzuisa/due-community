@@ -17,13 +17,13 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
-        // 设置key的序列化方式
+        // Configure key serialization
         template.setKeySerializer(RedisSerializer.string());
-        // 设置value的序列化方式
+        // Configure value serialization
         template.setValueSerializer(RedisSerializer.json());
-        // 设置hash的key的序列化方式
+        // Configure hash key serialization
         template.setHashKeySerializer(RedisSerializer.string());
-        // 设置hash的value的序列化方式
+        // Configure hash value serialization
         template.setHashValueSerializer(RedisSerializer.json());
 
 
