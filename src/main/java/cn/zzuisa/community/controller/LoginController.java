@@ -68,7 +68,7 @@ public class LoginController implements CommunityConstant {
     public String register(Model model, User user) {
         Map<String, Object> map = userService.register(user);
         if (map == null || map.isEmpty()) {
-            model.addAttribute("msg", "注册成功,我们已经向您的邮箱发送了一封激活邮件,请尽快激活!");
+            model.addAttribute("msg", "Registration successful. We have sent an activation email to your inbox. Please activate your account as soon as possible!");
             model.addAttribute("target", "/index");
             return "/site/operate-result";
         } else {
@@ -83,14 +83,14 @@ public class LoginController implements CommunityConstant {
     public String activation(Model model, @PathVariable("userId") int userId, @PathVariable("code") String code) {
         int result = userService.activation(userId, code);
         if (result == ACTIVATION_SUCCESS) {
-            model.addAttribute("msg", "激活成功,您的账号已经可以正常使用了！");
+            model.addAttribute("msg", "Activation successful. Your account is now ready to use!");
             model.addAttribute("target", "/login");
         } else if (result == ACTIVATION_REPEAT) {
-            model.addAttribute("msg", "无效操作，该账号已经激活过了！");
+            model.addAttribute("msg", "Invalid operation. This account has already been activated!");
             model.addAttribute("target", "/index");
 
         } else {
-            model.addAttribute("msg", "激活失败，您提供的激活码不正确！");
+            model.addAttribute("msg", "Activation failed. The activation code you provided is incorrect!");
             model.addAttribute("target", "/index");
         }
         return "/site/operate-result";
@@ -98,28 +98,28 @@ public class LoginController implements CommunityConstant {
 
     @RequestMapping(path = "kaptcha", method = RequestMethod.GET)
     public void getKaptcha(HttpServletResponse response) {
-        // 生成验证码
+        // Generate captcha
         String text = kaptcherProducer.createText();
         BufferedImage image = kaptcherProducer.createImage(text);
-        // 将验证码存入session
+        // Store captcha in session
 //        session.setAttribute("kaptcha", text);
-        // 验证码的归属
+        // Captcha owner
         String kaptchaOwner = CommunityUtil.generateUUID();
         Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
         cookie.setMaxAge(60);
         cookie.setPath(contextPath);
         response.addCookie(cookie);
-        // 将验证码存入Redis
+        // Store captcha in Redis
         String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
         redisTemplate.opsForValue().set(redisKey, text, 60, TimeUnit.SECONDS);
-        // 将图片直接输出给浏览器
+        // Write image directly to the browser
         response.setContentType("image/png");
         try {
             ServletOutputStream outputStream = response.getOutputStream();
             ImageIO.write(image, "png", outputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("响应验证码失败：" + e.getMessage());
+            logger.error("Failed to write captcha response: " + e.getMessage());
         }
 
     }
@@ -136,10 +136,10 @@ public class LoginController implements CommunityConstant {
         }
 
         if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(loginForm.getCode()) || !kaptcha.equalsIgnoreCase(loginForm.getCode())) {
-            model.addAttribute("codeMsg", "验证码不正确！");
+            model.addAttribute("codeMsg", "Incorrect captcha!");
             return "/site/login";
         }
-        // 检验账号,密码
+        // Validate username and password
         long expiredSeconds = loginForm.isRememberme() ? REMEMBER_EXPIRED_SECONDS : DEFAULT_EXPIRED_SECONDS;
         Map<String, Object> map = userService.login(loginForm.getUsername(), loginForm.getPassword(), expiredSeconds);
 
